@@ -1,0 +1,4 @@
+1,Strike,Hits the targeted infadel for 6 damage,1,6
+2,Slap,Hits like a woman for 5 damage,1,5
+3,Sange,A blade of unimaginable power. Too bad it hits for 7 damage lol,1,7
+4,Yasha,slightly less cool than a Yasha; hits for 3 damage,1,3

@@ -7,6 +7,6 @@ public class CardScript : MonoBehaviour {
     public string id;
     public string cardName;
     public string text;
-    public int cost = 1;
-    public int damage = 3;
+    public int cost;
+    public int damage;
 }

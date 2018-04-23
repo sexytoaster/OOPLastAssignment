@@ -5,7 +5,15 @@ using Random = UnityEngine.Random;
 //Enemy inherits from MovingObject, our base class for objects that can move, Player also inherits from this.
 public class EnemyScript : MonoBehaviour
 {
-    public int health = Random.Range(20, 50);
+    public int health;
+
+    void Awake()
+    { 
+         int tempHealth = Random.Range(20, 50);
+        health = tempHealth;
+    }
+
+
 
 
     //Start overrides the virtual Start function of the base class.
