@@ -6,6 +6,17 @@ using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
+    //public GameObject Card;
+
+    //private CardScript card;
+
+    //private EnemyScript enemyScript;
+
+    //public GameObject enemy = GameObject.FindWithTag("Enemy");
+
+    private EnemyScript enemyScript;
+
+
     public Transform parentToReturnTo = null;
 
     GameObject placeholder = null;
@@ -39,11 +50,27 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
-        this.transform.SetParent( parentToReturnTo );
-        this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
+        
+
+       
+        Debug.Log("OnEndDrag");
+
+        Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+        this.transform.SetParent( parentToReturnTo );
+        this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
+
         Destroy(placeholder);
+
+        int x = GetComponent<CardScript>().damage;
+
+         //int i = enemy.GetComponent<EnemyScript>().health;
+
+         //enemy.GetComponent<EnemyScript>().health = x;*/
+
+        enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
+
+        enemyScript.health = enemyScript.health - x;
     }
 }

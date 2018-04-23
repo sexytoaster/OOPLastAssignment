@@ -6,20 +6,6 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour {
 
-    /*This is for loading in random ammounts of assets
-    [Serializable]
-    public class Count
-    {
-        public int minimum;
-        public int maximum;
-
-        public Count(int min, int max)
-        {
-            minimum = min;
-            maximum = max;
-        }
-
-    } */
 
     public GameObject[] enemy;
     public GameObject[] cardsInHand;
