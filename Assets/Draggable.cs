@@ -67,6 +67,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             {
                 bool x = GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn;
 
+            //make it go back to hand
                 if (x == false)
                 {
                     GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -81,7 +82,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
                     Destroy(placeholder);
-            }
+                }
+                //else its the players turn and he played the card so he can do as he likes
                 else
                 {
 

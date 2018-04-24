@@ -7,13 +7,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     private BoardManager boardScript;
     public GameObject CardHolder;
-   
+    private int enemyHealth;
 
     public List<CardScript> deck = new List<CardScript>();
 
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour {
         boardScript = GetComponent<BoardManager>();
 
         //Call the InitGame function to initialize the first level 
+
         InitGame();
 		 
 	}
@@ -103,6 +105,12 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        //currently throwing nullreferenceexception when it loads new scene because this is only for the battle scene, will fix 
+        enemyHealth = GameObject.Find("Enemy").GetComponent<EnemyScript>().health;
+        Debug.Log(enemyHealth);
+        if (enemyHealth <= 0)
+        {
+            SceneManager.LoadScene("Victory", LoadSceneMode.Single);
+        }
 	}
 }
