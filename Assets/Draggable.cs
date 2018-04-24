@@ -51,11 +51,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         this.transform.position = eventData.position;
     }
 
+    //a lot of stuff is contained in onEndDrag
+    //i wanted this to be in Dropzones onDrop but this triggers first so this is the way it needs to be for the moment
     public void OnEndDrag(PointerEventData eventData)
     {
-
+        //get a reference to hand object so you can send objects back to hand if not player turn, wont be played
         GameObject Hand = GameObject.Find("Hand");
-
+        
+        //bool to see if over table when dropped
         bool OverTable = false;
 
         if(eventData.pointerCurrentRaycast.gameObject.tag == "TableTop")
@@ -63,6 +66,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 OverTable = true;
             }
 
+        //if it is, check its player turn so if it isnt the card isnt played
         if (OverTable == true)
             {
                 bool x = GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn;
@@ -78,6 +82,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     Debug.Log("OnEndDragTrue");
 
                     Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+                    //transform to hand
                     this.transform.SetParent(Hand.transform);
                     this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
@@ -86,20 +91,23 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 //else its the players turn and he played the card so he can do as he likes
                 else
                 {
-
+                    //the trigger for draw hand needs to be moved, is just here while i test errors with the moving between scenes
+                    GameObject.Find("GameManager").GetComponent<BoardManager>().DrawHand();
+                    //cards block rays
                     GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 
 
 
                     Debug.Log("OnEndDragTrue");
-
+                    //put it on tabletop
                     Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
                     this.transform.SetParent(parentToReturnTo);
                     this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
                     Destroy(placeholder);
-
+                    
+                    //execute info on the card you dropped, unique info too. r/iamverysmart
                     int cost = GetComponent<CardScript>().cost;
                     int damage = GetComponent<CardScript>().damage;
                     int block = GetComponent<CardScript>().block;
@@ -107,14 +115,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     int weak = GetComponent<CardScript>().weak;
                     int vunerable = GetComponent<CardScript>().vunerable;
 
+                    //get the script for the specific enemy in scene and change its shit, will add 
+                    //the other values effects later
 
                     enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
-
+                    
                     enemyScript.health = enemyScript.health - damage;
                 }
             }
         else
             {
+                //this is getting a bit redundant, and you can see this part could be a lot more elegant by the fact i do the same thing 4 times but it works so its ok for now, gotta focus on stuff that doesnt
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
 
                 Debug.Log("OnEndDrag");

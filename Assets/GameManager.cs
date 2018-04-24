@@ -20,17 +20,22 @@ public class GameManager : MonoBehaviour {
 
     public int level = 1;
 
+    //this is where the cards are read from file into an array, i think it works well. The cards dont actually draw properly yet though so need to fix that
     void CardCreation()
     {
+        //relatively small buffer but it works for what im doing
         const int BufferSize = 128;
+        //open up the file
         using (var fileStream = File.OpenRead("Assets/cardData.txt"))
         using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
         {
+            //take in the fie line by line
             string line;
             while ((line = streamReader.ReadLine()) != null && !streamReader.EndOfStream)
             {
-
+                //unfortunately i need like 6 temps because i need to parse all the different pieces. I could think of a better way but again it works and at this point i dont wanna mess with it too much
                 string temp1, temp2, temp3, temp4, temp5, temp6;
+                //we split the line into a string array called value at each comma in the string
                 string[] value = line.Split(',');
                 
 
@@ -48,6 +53,8 @@ public class GameManager : MonoBehaviour {
 
                 //Card = gameObject.GetComponent<CardScript>();
 
+                //this just assigns the values pulled from the file into the string array to the respective parts of the card object they're supossed to go to
+                //lots of parsing i know
                 Card.id = value[0];
                 Card.cardName = value[1];
                 Card.text = value[2];
@@ -58,6 +65,7 @@ public class GameManager : MonoBehaviour {
                 Card.weak = Int32.Parse(temp5);
                 Card.vunerable = Int32.Parse(temp6);
 
+                //add the newly made card to the deck and repeat for all the cards in the file
                 deck.Add(Card);
             }
 
@@ -72,7 +80,7 @@ public class GameManager : MonoBehaviour {
         // Use this for initialization
     void Awake () {
         //Check if instance already exists
-        /*if (instance == null)
+        if (instance == null)
 
             //if not, set instance to this
             instance = this;
@@ -95,10 +103,10 @@ public class GameManager : MonoBehaviour {
 		 
 	}
 
-    void InitGame()
+    public void InitGame()
     {
         //boardScript.SetUpScene(level);
-
+        //call card creation when the game starts
        CardCreation();
        boardScript.DrawHand();
 }
@@ -107,7 +115,6 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         //currently throwing nullreferenceexception when it loads new scene because this is only for the battle scene, will fix 
         enemyHealth = GameObject.Find("Enemy").GetComponent<EnemyScript>().health;
-        Debug.Log(enemyHealth);
         if (enemyHealth <= 0)
         {
             SceneManager.LoadScene("Victory", LoadSceneMode.Single);

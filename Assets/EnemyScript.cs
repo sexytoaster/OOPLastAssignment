@@ -13,16 +13,20 @@ public class EnemyScript : MonoBehaviour
 
     void Awake()
     {
+        //on spawn it finds out the level, used to scale attack and health
         x = GameObject.Find("GameManager").GetComponent<GameManager>().level;
+        //add randomness to enemy
         int tempHealth = Random.Range(20, 30);
         health = tempHealth * (1 + (x / 5));
+        //attack starts at 6 a turn, will also add turns where this randomizes a bit i think
         initialAttack = 6;
     }
 
     void Attack()
     {
-        
+        //funtion for attack for enemy, reduces player health
         GameObject.Find("Player").GetComponent<Player>().playerHealth -= (initialAttack * (1 + (x/ 5)));
+        //switches to player turn, should probably make a proper controller
         GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn = true;
     }
 
@@ -32,6 +36,7 @@ public class EnemyScript : MonoBehaviour
         textMesh[0].text = health.ToString();
         textMesh[1].text = initialAttack.ToString();
 
+        //if its not the players turn, do the enemy turn
         bool turn = GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn;
         if(turn == false)
         {
