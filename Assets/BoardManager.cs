@@ -12,6 +12,7 @@ public class BoardManager : MonoBehaviour {
     private CardScript script;
     public GameObject Card;
     public GameObject Hand;
+    public bool playerTurn;
 
     private int cardsDrawn = 0;
     public GameObject[] enemy;
@@ -84,6 +85,8 @@ public class BoardManager : MonoBehaviour {
             textArray[0].text = card.cardName;
             textArray[1].text = card.text;
 
+
+            playerTurn = true;
         }
     }
 

@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     public int playerHealth = 50;
     public int playerBlock;
     public int currentMana;
-    public int maxMana;
+    public int maxMana = 3;
     public int strength;
 
     private void Awake()

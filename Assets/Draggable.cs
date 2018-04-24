@@ -15,6 +15,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //public GameObject enemy = GameObject.FindWithTag("Enemy");
 
     private EnemyScript enemyScript;
+    private GameObject Hand;
 
 
     public Transform parentToReturnTo = null;
@@ -39,6 +40,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         this.transform.SetParent(this.transform.parent.parent);
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -50,6 +53,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+
+        GameObject Hand = GameObject.Find("Hand");
+
         bool OverTable = false;
 
         if(eventData.pointerCurrentRaycast.gameObject.tag == "TableTop")
@@ -59,30 +65,51 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         if (OverTable == true)
             {
-                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                bool x = GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn;
+
+                if (x == false)
+                {
+                    GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 
 
 
-                Debug.Log("OnEndDrag");
+                    Debug.Log("OnEndDragTrue");
 
-                Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
-                this.transform.SetParent(parentToReturnTo);
-                this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
+                    Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+                    this.transform.SetParent(Hand.transform);
+                    this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
-                Destroy(placeholder);
+                    Destroy(placeholder);
+            }
+                else
+                {
 
-                int cost = GetComponent<CardScript>().cost;
-                int damage = GetComponent<CardScript>().damage;
-                int block = GetComponent<CardScript>().block;
-                int strength = GetComponent<CardScript>().strength;
-                int weak = GetComponent<CardScript>().weak;
-                int vunerable = GetComponent<CardScript>().vunerable;
+                    GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 
-                enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
-                
-                enemyScript.health = enemyScript.health - damage;
+
+
+                    Debug.Log("OnEndDragTrue");
+
+                    Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+                    this.transform.SetParent(parentToReturnTo);
+                    this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
+
+                    Destroy(placeholder);
+
+                    int cost = GetComponent<CardScript>().cost;
+                    int damage = GetComponent<CardScript>().damage;
+                    int block = GetComponent<CardScript>().block;
+                    int strength = GetComponent<CardScript>().strength;
+                    int weak = GetComponent<CardScript>().weak;
+                    int vunerable = GetComponent<CardScript>().vunerable;
+
+
+                    enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
+
+                    enemyScript.health = enemyScript.health - damage;
+                }
             }
         else
             {

@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     private BoardManager boardScript;
     public GameObject CardHolder;
-    public int playerHealth = 50;
+   
 
     public List<CardScript> deck = new List<CardScript>();
 
-    private int level = 0;
+    public int level = 1;
 
     void CardCreation()
     {
@@ -66,11 +66,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
-    void Player()
-    {
-        
-    }
+   
 
         // Use this for initialization
     void Awake () {
@@ -87,7 +83,7 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         //Sets this to not be destroyed when reloading scene*/
-       // DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         //Get a component reference to the attached BoardManager script
         boardScript = GetComponent<BoardManager>();
@@ -102,9 +98,8 @@ public class GameManager : MonoBehaviour {
         //boardScript.SetUpScene(level);
 
        CardCreation();
-       Player();
        boardScript.DrawHand();
-    }
+}
 	
 	// Update is called once per frame
 	void Update () {
