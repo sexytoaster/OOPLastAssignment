@@ -75,6 +75,10 @@ public class BoardManager : MonoBehaviour {
             script.text = card.text;
             script.cost = card.cost;
             script.damage = card.damage;
+            script.block = card.block;
+            script.strength = card.strength;
+            script.weak = card.weak;
+            script.vunerable = card.vunerable;
 
 
             textArray[0].text = card.cardName;

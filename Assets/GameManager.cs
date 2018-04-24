@@ -13,9 +13,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     private BoardManager boardScript;
     public GameObject CardHolder;
+    public int playerHealth = 50;
 
-
-    //public List<CardScript> list;
     public List<CardScript> deck = new List<CardScript>();
 
     private int level = 0;
@@ -30,13 +29,17 @@ public class GameManager : MonoBehaviour {
             while ((line = streamReader.ReadLine()) != null && !streamReader.EndOfStream)
             {
 
-                string temp1, temp2;
+                string temp1, temp2, temp3, temp4, temp5, temp6;
                 string[] value = line.Split(',');
                 
 
                 Debug.Log(value[0]);
                 temp1 = value[3];
                 temp2 = value[4];
+                temp3 = value[5];
+                temp4 = value[6];
+                temp5 = value[7];
+                temp6 = value[8];
 
 
 
@@ -49,6 +52,10 @@ public class GameManager : MonoBehaviour {
                 Card.text = value[2];
                 Card.cost = Int32.Parse(temp1);
                 Card.damage = Int32.Parse(temp2);
+                Card.block = Int32.Parse(temp3);
+                Card.strength = Int32.Parse(temp4);
+                Card.weak = Int32.Parse(temp5);
+                Card.vunerable = Int32.Parse(temp6);
 
                 deck.Add(Card);
             }
@@ -59,8 +66,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+
+    void Player()
+    {
+        
+    }
+
         // Use this for initialization
-        void Awake () {
+    void Awake () {
         //Check if instance already exists
         /*if (instance == null)
 
@@ -73,8 +86,8 @@ public class GameManager : MonoBehaviour {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);*/
+        //Sets this to not be destroyed when reloading scene*/
+       // DontDestroyOnLoad(gameObject);
 
         //Get a component reference to the attached BoardManager script
         boardScript = GetComponent<BoardManager>();
@@ -89,6 +102,7 @@ public class GameManager : MonoBehaviour {
         //boardScript.SetUpScene(level);
 
        CardCreation();
+       Player();
        boardScript.DrawHand();
     }
 	

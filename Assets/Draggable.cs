@@ -50,27 +50,51 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        bool OverTable = false;
 
-        
+        if(eventData.pointerCurrentRaycast.gameObject.tag == "TableTop")
+            {
+                OverTable = true;
+            }
 
-       
-        Debug.Log("OnEndDrag");
+        if (OverTable == true)
+            {
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
-        this.transform.SetParent( parentToReturnTo );
-        this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
-        Destroy(placeholder);
 
-        int x = GetComponent<CardScript>().damage;
 
-         //int i = enemy.GetComponent<EnemyScript>().health;
+                Debug.Log("OnEndDrag");
 
-         //enemy.GetComponent<EnemyScript>().health = x;*/
+                Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+                this.transform.SetParent(parentToReturnTo);
+                this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
-        enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
+                Destroy(placeholder);
 
-        enemyScript.health = enemyScript.health - x;
-    }
+                int cost = GetComponent<CardScript>().cost;
+                int damage = GetComponent<CardScript>().damage;
+                int block = GetComponent<CardScript>().block;
+                int strength = GetComponent<CardScript>().strength;
+                int weak = GetComponent<CardScript>().weak;
+                int vunerable = GetComponent<CardScript>().vunerable;
+
+
+                enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
+                
+                enemyScript.health = enemyScript.health - damage;
+            }
+        else
+            {
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                Debug.Log("OnEndDrag");
+
+                Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+                this.transform.SetParent(parentToReturnTo);
+                this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
+
+                Destroy(placeholder);
+            }   
+        }
 }
