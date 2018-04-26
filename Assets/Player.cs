@@ -29,6 +29,18 @@ public class Player : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    public void StartTurn()
+    {
+        GameObject Hand = GameObject.Find("Hand");
+        foreach (Transform child in Hand.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        GameObject.Find("GameManager").GetComponent<BoardManager>().DrawHand();
+        
+    }
+
     // Use this for initialization
     void Start () {
 		

@@ -91,8 +91,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 //else its the players turn and he played the card so he can do as he likes
                 else
                 {
-                    //the trigger for draw hand needs to be moved, is just here while i test errors with the moving between scenes
-                    GameObject.Find("GameManager").GetComponent<BoardManager>().DrawHand();
                     //cards block rays
                     GetComponent<CanvasGroup>().blocksRaycasts = true;
 

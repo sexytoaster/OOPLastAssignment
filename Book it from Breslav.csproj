@@ -83,11 +83,16 @@
   <ItemGroup>
     <Compile Include="Assets\BoardManager.cs" />
     <Compile Include="Assets\CardCreation.cs" />
+    <Compile Include="Assets\CardHolder.cs" />
     <Compile Include="Assets\CardScript.cs" />
+    <Compile Include="Assets\Continue.cs" />
     <Compile Include="Assets\Draggable.cs" />
     <Compile Include="Assets\Dropzone.cs" />
+    <Compile Include="Assets\EndTurn.cs" />
     <Compile Include="Assets\EnemyScript.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\Play.cs" />
+    <Compile Include="Assets\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cardData.txt" />

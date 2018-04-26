@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour {
     public GameObject Card;
     public GameObject Hand;
     public bool playerTurn;
+    public int deckCount = 0;
 
     private int cardsDrawn = 0;
     public GameObject[] enemy;
@@ -51,6 +52,30 @@ public class BoardManager : MonoBehaviour {
         SpawnEnemys(enemy);
     }
 
+    public void ShuffleDeck()
+    {
+        List<CardScript> deckShuffle = GameObject.Find("GameManager").GetComponent<GameManager>().deck;
+
+        CardScript t;
+        int m = deckShuffle.Count, i;
+
+        // While there remain elements to shuffle…
+        while (m!=0)
+        {
+
+            System.Random rNum = new System.Random();
+            // Pick a remaining element…
+            i = rNum.Next(0, m--);
+
+            // And swap it with the current element.
+            t = deckShuffle[m];
+            deckShuffle[m] = deckShuffle[i];
+            deckShuffle[i] = t;
+        }
+        
+    }
+
+
     public void DrawHand()
     {
         //draw hand fills the players hand with random cards from the deck. this is an issue at the moment
@@ -59,19 +84,22 @@ public class BoardManager : MonoBehaviour {
         //also doesnt discard current hand when you draw a new one which is what i want
         for (cardsDrawn = 0; cardsDrawn < 5; cardsDrawn++)
         {
+            
             //get a reference to the deck
             list = GameObject.Find("GameManager").GetComponent<GameManager>().deck;
-            //get a random number
-            System.Random randNum = new System.Random();
 
-            
+            if (deckCount >= list.Count)
+            {
+                deckCount = 0;
+                ShuffleDeck();
+            }    
+
             CardScript card;
-
             CardScript script;
 
 
             //choose a card using the random number from the deck(((gonna change)))
-            card = list[randNum.Next(0, list.Count)];
+            card = list[deckCount];
 
             //instanciate a card
             var newCard = Instantiate(Card, new Vector3(0, 0, 0), Quaternion.identity);
@@ -99,6 +127,8 @@ public class BoardManager : MonoBehaviour {
 
 
             playerTurn = true;
+
+            deckCount++;
         }
     }
 

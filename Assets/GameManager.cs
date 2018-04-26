@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
         {
             //take in the fie line by line
             string line;
-            while ((line = streamReader.ReadLine()) != null && !streamReader.EndOfStream)
+            while ((line = streamReader.ReadLine()) != null)// && !streamReader.EndOfStream)
             {
                 //unfortunately i need like 6 temps because i need to parse all the different pieces. I could think of a better way but again it works and at this point i dont wanna mess with it too much
                 string temp1, temp2, temp3, temp4, temp5, temp6;

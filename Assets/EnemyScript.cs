@@ -28,6 +28,7 @@ public class EnemyScript : MonoBehaviour
         GameObject.Find("Player").GetComponent<Player>().playerHealth -= (initialAttack * (1 + (x/ 5)));
         //switches to player turn, should probably make a proper controller
         GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn = true;
+        GameObject.Find("Player").GetComponent<Player>().StartTurn();
     }
 
     void Update()
