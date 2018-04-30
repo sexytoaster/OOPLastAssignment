@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     public int currentMana = 3;
     public int maxMana = 3;
     public int strength = 0;
+    public int level;
 
     private void Awake()
     {
@@ -27,10 +28,13 @@ public class Player : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        currentMana = maxMana;
     }
 
     public void StartTurn()
     {
+        currentMana = maxMana;
         GameObject Hand = GameObject.Find("Hand");
         foreach (Transform child in Hand.transform)
         {
@@ -38,7 +42,7 @@ public class Player : MonoBehaviour {
         }
 
         GameObject.Find("GameManager").GetComponent<BoardManager>().DrawHand();
-        
+        level = GameObject.Find("GameManager").GetComponent<GameManager>().level;
     }
 
     // Use this for initialization
@@ -51,5 +55,7 @@ public class Player : MonoBehaviour {
         textMesh = GetComponentsInChildren<TextMesh>();
         textMesh[0].text = playerHealth.ToString();
         textMesh[1].text = playerBlock.ToString();
+        textMesh[2].text = currentMana.ToString();
+        textMesh[3].text = "level: " + level.ToString();
     }
 }

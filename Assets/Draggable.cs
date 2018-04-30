@@ -55,6 +55,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //i wanted this to be in Dropzones onDrop but this triggers first so this is the way it needs to be for the moment
     public void OnEndDrag(PointerEventData eventData)
     {
+        //get the players current mana
+        int currentMana = GameObject.Find("Player").GetComponent<Player>().currentMana;
+        //get card cost
+        int cost = GetComponent<CardScript>().cost;
+
         //get a reference to hand object so you can send objects back to hand if not player turn, wont be played
         GameObject Hand = GameObject.Find("Hand");
         
@@ -72,7 +77,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 bool x = GameObject.Find("GameManager").GetComponent<BoardManager>().playerTurn;
 
             //make it go back to hand
-                if (x == false)
+                if (x == false || currentMana - cost < 0)
                 {
                     GetComponent<CanvasGroup>().blocksRaycasts = true;
 
@@ -104,9 +109,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
 
                     Destroy(placeholder);
-                    
+
+                    GameObject.Find("Player").GetComponent<Player>().currentMana = currentMana - cost;
                     //execute info on the card you dropped, unique info too. r/iamverysmart
-                    int cost = GetComponent<CardScript>().cost;
                     int damage = GetComponent<CardScript>().damage;
                     int block = GetComponent<CardScript>().block;
                     int strength = GetComponent<CardScript>().strength;
@@ -117,8 +122,29 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     //the other values effects later
 
                     enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
-                    
-                    enemyScript.health = enemyScript.health - damage;
+                    if (block > 0)
+                    {
+                        GameObject.Find("Player").GetComponent<Player>().playerBlock = GameObject.Find("Player").GetComponent<Player>().playerBlock + block;
+                    }
+
+                    if (strength > 0)
+                    {
+                        GameObject.Find("Player").GetComponent<Player>().strength = GameObject.Find("Player").GetComponent<Player>().strength + strength;
+                    }
+                    if (weak > 0)
+                    {
+                        GameObject.Find("Enemy").GetComponent<EnemyScript>().weak = GameObject.Find("Enemy").GetComponent<EnemyScript>().weak + weak;
+                    }
+                    if (vunerable > 0)
+                    {
+                        GameObject.Find("Enemy").GetComponent<EnemyScript>().vunerable = GameObject.Find("Enemy").GetComponent<EnemyScript>().vunerable + vunerable;
+                    }
+
+                    if(GameObject.Find("Enemy").GetComponent<EnemyScript>().vunerable > 0)
+                    {
+                        damage = damage + (damage / 2);
+                    }
+                    enemyScript.health = enemyScript.health - damage - GameObject.Find("Player").GetComponent<Player>().strength;
 
                 GameObject Table = GameObject.Find("TableTop");
                 foreach (Transform child in Table.transform)

@@ -1,6 +1,11 @@
-1,Strike,Hits the targeted infadel for 6 damage,1,6,0,0,0,0
 2,Slap,Hits like a woman for 5 damage and applies 1 vunerable,1,5,0,0,0,1
 3,Sange,A blade of unimaginable power. It hits for 7 damage and applies 2 weak,1,7,0,0,2,0
-4,Bash,Hits for 9 damage and leaves the target vunerable for 2 turns,2,9,0,0,0,2
 5,Mad Charge,Launch a wreckless assault upon your enemy; they are left weak and vunerable for a turn,2,11,0,0,1,1
 6,Crouching Tiger,Hits opponent for 12 damage and blocks for 12,2,12,12,0,0,0
+8,Divine Rapier,Hits the target for 32 damage,3,32,0,0,0,0
+9,Hot Lung,Breathe fire from the depths of your hot lung. Deal 10 damage,1,10,0,0,0,0
+10,Drum and Bass,Whats your favourite genre of music? deal 22 damage,2,22,0,0,0,0
+11,Barrell Roll,Blocks 12 damage and weakens the enemy for 2 turns,2,0,12,0,2,0
+12,Shadow Blade,Hits the enemy from behind for 12 damage leaving them vunerable for a turn,2,12,0,0,0,2
+13,Uppercut,Deals 13 damage and applies one weak and one vunerable,2,13,0,0,1,1
+14,Inflame,Increase your strength for this combat by 3,1,0,0,3,0,0

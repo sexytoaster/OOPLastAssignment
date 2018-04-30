@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour {
     private int enemyHealth;
 
     public List<CardScript> deck = new List<CardScript>();
+    public List<CardScript> allCards = new List<CardScript>();
 
-    public int level = 1;
+    public int level;
 
     //this is where the cards are read from file into an array, i think it works well. The cards dont actually draw properly yet though so need to fix that
     void CardCreation()
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour {
         //relatively small buffer but it works for what im doing
         const int BufferSize = 128;
         //open up the file
-        using (var fileStream = File.OpenRead("Assets/cardData.txt"))
+        using (var fileStream = File.OpenRead("Assets/startingCards.txt"))
         using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
         {
             //take in the fie line by line
@@ -69,10 +70,61 @@ public class GameManager : MonoBehaviour {
                 deck.Add(Card);
             }
 
+            streamReader.Close();
             Debug.Log(deck[0].damage);
             Debug.Log(deck[1].damage);
             Debug.Log(deck[2].damage);
         }
+
+        using (var fileStream = File.OpenRead("Assets/cardData.txt"))
+        using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
+        {
+            //take in the fie line by line
+            string line;
+            while ((line = streamReader.ReadLine()) != null)// && !streamReader.EndOfStream)
+            {
+                //unfortunately i need like 6 temps because i need to parse all the different pieces. I could think of a better way but again it works and at this point i dont wanna mess with it too much
+                string temp1, temp2, temp3, temp4, temp5, temp6;
+                //we split the line into a string array called value at each comma in the string
+                string[] value = line.Split(',');
+
+
+                Debug.Log(value[0]);
+                temp1 = value[3];
+                temp2 = value[4];
+                temp3 = value[5];
+                temp4 = value[6];
+                temp5 = value[7];
+                temp6 = value[8];
+
+
+
+                CardScript Card = CardHolder.AddComponent<CardScript>();
+
+                //Card = gameObject.GetComponent<CardScript>();
+
+                //this just assigns the values pulled from the file into the string array to the respective parts of the card object they're supossed to go to
+                //lots of parsing i know
+                Card.id = value[0];
+                Card.cardName = value[1];
+                Card.text = value[2];
+                Card.cost = Int32.Parse(temp1);
+                Card.damage = Int32.Parse(temp2);
+                Card.block = Int32.Parse(temp3);
+                Card.strength = Int32.Parse(temp4);
+                Card.weak = Int32.Parse(temp5);
+                Card.vunerable = Int32.Parse(temp6);
+
+                //add the newly made card to the deck and repeat for all the cards in the file
+                allCards.Add(Card);
+            }
+            streamReader.Close();
+            Debug.Log(deck[0].damage);
+            Debug.Log(deck[1].damage);
+            Debug.Log(deck[2].damage);
+        }
+
+        level = 1;
     }
 
    
@@ -107,18 +159,26 @@ public class GameManager : MonoBehaviour {
     {
         //boardScript.SetUpScene(level);
         //call card creation when the game starts
+
+        level = 1;
         CardCreation();
         boardScript.ShuffleDeck();
         boardScript.DrawHand();
 }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         //currently throwing nullreferenceexception when it loads new scene because this is only for the battle scene, will fix 
-        enemyHealth = GameObject.Find("Enemy").GetComponent<EnemyScript>().health;
-        if (enemyHealth <= 0)
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "backupBreslav")
         {
-            SceneManager.LoadScene("Victory", LoadSceneMode.Single);
+            enemyHealth = GameObject.Find("Enemy").GetComponent<EnemyScript>().health;
+            if (enemyHealth <= 0)
+            {
+                level++;
+                SceneManager.LoadScene("Victory", LoadSceneMode.Single);
+                boardScript.DrawHand();
+            }
         }
 	}
 }

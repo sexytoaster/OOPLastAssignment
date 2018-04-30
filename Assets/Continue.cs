@@ -24,6 +24,7 @@ public class Continue : MonoBehaviour
         SceneManager.LoadScene("backupBreslav", LoadSceneMode.Single);
         //GameObject.Find("GameManager").GetComponent<GameManager>().InitGame();
         GameObject.Find("GameManager").GetComponent<BoardManager>().DrawHand();
+        GameObject.Find("Player").GetComponent<Player>().currentMana = GameObject.Find("Player").GetComponent<Player>().maxMana;
 
     }
 }

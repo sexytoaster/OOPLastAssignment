@@ -75,6 +75,28 @@ public class BoardManager : MonoBehaviour {
         
     }
 
+    /*public void ShuffleDeck()
+    {
+        List<CardScript> deckShuffle = GameObject.Find("GameManager").GetComponent<GameManager>().deck;
+
+        CardScript t;
+        int m = GameObject.Find("GameManager").GetComponent<GameManager>().deck.Count, i;
+
+        // While there remain elements to shuffle…
+        while (m != 0)
+        {
+
+            System.Random rNum = new System.Random();
+            // Pick a remaining element…
+            i = rNum.Next(0, m--);
+
+            // And swap it with the current element.
+            t = GameObject.Find("GameManager").GetComponent<GameManager>().deck[m];
+            GameObject.Find("GameManager").GetComponent<GameManager>().deck[m] = GameObject.Find("GameManager").GetComponent<GameManager>().deck[i];
+            GameObject.Find("GameManager").GetComponent<GameManager>().deck[i] = t;
+        }
+
+    }*/
 
     public void DrawHand()
     {
@@ -124,7 +146,7 @@ public class BoardManager : MonoBehaviour {
             //put text in text boxes
             textArray[0].text = card.cardName;
             textArray[1].text = card.text;
-
+            textArray[2].text = card.cost.ToString();
 
             playerTurn = true;
 
