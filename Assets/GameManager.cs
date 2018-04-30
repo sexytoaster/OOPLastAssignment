@@ -107,8 +107,9 @@ public class GameManager : MonoBehaviour {
     {
         //boardScript.SetUpScene(level);
         //call card creation when the game starts
-       CardCreation();
-       boardScript.DrawHand();
+        CardCreation();
+        boardScript.ShuffleDeck();
+        boardScript.DrawHand();
 }
 	
 	// Update is called once per frame

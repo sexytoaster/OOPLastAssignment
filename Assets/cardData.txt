@@ -1,4 +1,6 @@
 1,Strike,Hits the targeted infadel for 6 damage,1,6,0,0,0,0
-2,Slap,Hits like a woman for 5 damage and applies 2 vunerable,1,5,0,0,0,2
+2,Slap,Hits like a woman for 5 damage and applies 1 vunerable,1,5,0,0,0,1
 3,Sange,A blade of unimaginable power. It hits for 7 damage and applies 2 weak,1,7,0,0,2,0
-4,Yasha,slightly less cool than a Sange; hits for 3 damage but blocks for 7,1,3,7,0,0,0
+4,Bash,Hits for 9 damage and leaves the target vunerable for 2 turns,2,9,0,0,0,2
+5,Mad Charge,Launch a wreckless assault upon your enemy; they are left weak and vunerable for a turn,2,11,0,0,1,1
+6,Crouching Tiger,Hits opponent for 12 damage and blocks for 12,2,12,12,0,0,0

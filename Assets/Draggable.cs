@@ -119,7 +119,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
                     
                     enemyScript.health = enemyScript.health - damage;
+
+                GameObject Table = GameObject.Find("TableTop");
+                foreach (Transform child in Table.transform)
+                {
+                    GameObject.Destroy(child.gameObject);
                 }
+            }
             }
         else
             {
